@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const indexRoute = require("./src/routes/index");
 const CONFIG = require("./src/config/config");
 const connectDB = require("./src/config/db");
+const swaggerDocs = require("./swagger");
 
 const PORT = CONFIG.ENV.PORT;
 
@@ -14,6 +15,8 @@ app.use(express.json());
 
 // Connect to the database
 connectDB();
+
+swaggerDocs(app);
 
 // Route middlewares
 app.use("/api/v1", indexRoute);

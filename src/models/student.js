@@ -81,7 +81,6 @@ const studentSchema = new mongoose.Schema(
     },
     photo: {
       type: String,
-      required: true,
       validate: {
         validator: (value) => {
           const imageRegex = /^data:image\/\w+;base64,/;
