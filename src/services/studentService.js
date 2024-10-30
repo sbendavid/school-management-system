@@ -1,4 +1,4 @@
-const Student = require("../models/student");
+const { Student } = require("../models/student");
 
 const studentService = {
   async createStudent(data) {
@@ -7,7 +7,7 @@ const studentService = {
   },
 
   async getStudents() {
-    return await Student.find();
+      return await Student.find();
   },
 
   async getStudentById(id) {

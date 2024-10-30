@@ -1,5 +1,5 @@
 const express = require("express");
-const dotenv = require("dotenv");
+const cors = require("cors");
 
 const indexRoute = require("./src/routes/index");
 const CONFIG = require("./src/config/config");
@@ -9,9 +9,14 @@ const swaggerDocs = require("./swagger");
 const PORT = CONFIG.ENV.PORT;
 
 // Initialize app and environment variables
-dotenv.config();
 const app = express();
 app.use(express.json());
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 
 // Connect to the database
 connectDB();
