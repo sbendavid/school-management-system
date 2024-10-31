@@ -49,7 +49,7 @@ courseRoute.post(
   "/",
   /**
    * @swagger
-   * /courses:
+   * /course:
    *   post:
    *     summary: Creates a new course
    *     tags: [Courses]
