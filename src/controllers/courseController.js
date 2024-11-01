@@ -1,9 +1,9 @@
 const courseService = require("../services/courseService");
-const {
-  courseValidation,
-  updateCourseSchema,
-  updateCourseStatusSchema,
-} = require("../utils/validator");
+// const {
+//   courseValidation,
+//   updateCourseSchema,
+//   updateCourseStatusSchema,
+// } = require("../utils/validator");
 
 const courseController = {
   async createCourse(req, res) {

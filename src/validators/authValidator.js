@@ -20,7 +20,7 @@ const registerValidation = (data) => {
       )
       .required(),
     isStudent: Joi.bool().required(),
-    isTeacher: Joi.bool().required(),
+    idNumber: Joi.string().required(),
   });
 
   return schema.validate(data);

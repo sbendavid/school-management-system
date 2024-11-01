@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index",
-    "dev": "nodemon index"
+    "dev": "nodemon index",
+    "openapi": "node openapi/swagger.js"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +21,7 @@
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.2",
+    "swagger-autogen": "^2.23.7",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   },

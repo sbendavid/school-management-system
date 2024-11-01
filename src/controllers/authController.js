@@ -4,7 +4,7 @@ const {
   registerValidation,
   loginValidation,
   passwordValidation,
-} = require("../utils/validator");
+} = require("../validators/authValidator");
 const { jwtSign } = require("../utils/jwt");
 
 const authController = {

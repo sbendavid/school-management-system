@@ -1,0 +1,951 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "School Management API",
+    "description": "API documentation for managing students, teachers, and parents",
+    "version": "1.0.0",
+    "contact": {
+      "name": "sbendavid"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1",
+      "description": "Local Server"
+    },
+    {
+      "url": "https://not-hosted-yet.onrender.com/api/",
+      "description": "Remote Host"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Create user",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserCreated"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserCreated"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRequired"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRequired"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Login",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginSuccess"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginSuccess"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidEmailOrPassword"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidEmailOrPassword"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidPassword"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidPassword"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailDoesNotExists"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailDoesNotExists"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/change_password": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "change password",
+        "description": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginSuccess"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginSuccess"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidEmailOrPassword"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidEmailOrPassword"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidPassword"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidPassword"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailDoesNotExists"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailDoesNotExists"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "currentPassword": {
+                    "example": "any"
+                  },
+                  "newPassword": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/course/": {
+      "post": {
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user": {
+                    "example": "any"
+                  },
+                  "class": {
+                    "example": "any"
+                  },
+                  "code": {
+                    "example": "any"
+                  },
+                  "status": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/course/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "example": "any"
+                  },
+                  "grade": {
+                    "example": "any"
+                  },
+                  "age": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "johnstone@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "Password@1"
+          }
+        },
+        "xml": {
+          "name": "Login"
+        }
+      },
+      "LoginSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "example": "johnstone@gmail.com"
+              },
+              "firstName": {
+                "type": "string",
+                "example": "John"
+              },
+              "idNumber": {
+                "type": "string",
+                "example": "2018/251501"
+              },
+              "isStudent": {
+                "type": "boolean",
+                "example": true
+              },
+              "lastName": {
+                "type": "string",
+                "example": "Stone"
+              },
+              "password": {
+                "type": "string",
+                "example": "Password@1"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "admin created / login successful"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          },
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZDNhMmM2YjFhYTk3OGYxNzRjZjcyOSIsInR5cGUiOiJhZG1pbiIsImVtYWlsIjoicHJtcHNtYXJ0QG1haWxpbmF0b3IuY29tIiwiaWF0IjoxNzI1MTQ1Nzk4LCJleHAiOjE3MjUxODg5OTh9.HbnQle5FVtGbr3IJiLg-UrE9DxJgdzGTi7onFmFcFsU"
+          }
+        },
+        "xml": {
+          "name": "LoginSuccess"
+        }
+      },
+      "InvalidEmail": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "invalid email"
+          },
+          "status": {
+            "type": "number",
+            "example": 400
+          }
+        },
+        "xml": {
+          "name": "InvalidEmail"
+        }
+      },
+      "InvalidEmailOrPassword": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "invalid email or password"
+          },
+          "status": {
+            "type": "number",
+            "example": 400
+          }
+        },
+        "xml": {
+          "name": "InvalidEmailOrPassword"
+        }
+      },
+      "InvalidPassword": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "invalid password"
+          },
+          "status": {
+            "type": "number",
+            "example": 401
+          }
+        },
+        "xml": {
+          "name": "InvalidPassword"
+        }
+      },
+      "EmailDoesNotExists": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "user with email does not exist"
+          },
+          "status": {
+            "type": "number",
+            "example": 404
+          }
+        },
+        "xml": {
+          "name": "EmailDoesNotExists"
+        }
+      },
+      "UserEmailExists": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "user with email already exists"
+          },
+          "status": {
+            "type": "number",
+            "example": 409
+          }
+        },
+        "xml": {
+          "name": "UserEmailExists"
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "johnstone@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "Password@1"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Stone"
+          },
+          "idNumber": {
+            "type": "string",
+            "example": "2018/251501"
+          },
+          "isStudent": {
+            "type": "boolean",
+            "example": true
+          }
+        },
+        "xml": {
+          "name": "User"
+        }
+      },
+      "UserRequired": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "example": "email is required"
+              },
+              "password": {
+                "type": "string",
+                "example": "password is required"
+              },
+              "firstName": {
+                "type": "string",
+                "example": "firstName is required"
+              },
+              "lastName": {
+                "type": "string",
+                "example": "lastName is required"
+              },
+              "idNumber": {
+                "type": "string",
+                "example": "idNumber is required"
+              },
+              "isStudent": {
+                "type": "string",
+                "example": "isStudent is required"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "email is required, password is required, firstName is required, lastName is required, idNumber is required, isStudent is required"
+          },
+          "status": {
+            "type": "number",
+            "example": 400
+          }
+        },
+        "xml": {
+          "name": "UserRequired"
+        }
+      },
+      "UserCreated": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "62abe4354f232"
+              },
+              "email": {
+                "type": "string",
+                "example": "johnstone@gmail.com"
+              },
+              "password": {
+                "type": "string",
+                "example": "Password@1"
+              },
+              "firstName": {
+                "type": "string",
+                "example": "John"
+              },
+              "lastName": {
+                "type": "string",
+                "example": "Stone"
+              },
+              "idNumber": {
+                "type": "string",
+                "example": "2018/251501"
+              },
+              "isStudent": {
+                "type": "boolean",
+                "example": true
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "user created"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "UserCreated"
+        }
+      },
+      "UserUpdated": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "62abe4354f232"
+              },
+              "email": {
+                "type": "string",
+                "example": "johnstone@gmail.com"
+              },
+              "password": {
+                "type": "string",
+                "example": "Password@1"
+              },
+              "firstName": {
+                "type": "string",
+                "example": "John"
+              },
+              "lastName": {
+                "type": "string",
+                "example": "Stone"
+              },
+              "idNumber": {
+                "type": "string",
+                "example": "2018/251501"
+              },
+              "isStudent": {
+                "type": "boolean",
+                "example": true
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "user updated"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "UserUpdated"
+        }
+      },
+      "UsersFetched": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "62abe4354f232"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "johnstone@gmail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "Password@1"
+                },
+                "firstName": {
+                  "type": "string",
+                  "example": "John"
+                },
+                "lastName": {
+                  "type": "string",
+                  "example": "Stone"
+                },
+                "idNumber": {
+                  "type": "string",
+                  "example": "2018/251501"
+                },
+                "isStudent": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2024-09-01T01:41:42.667Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2024-09-01T01:41:42.667Z"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "users fetched"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "UsersFetched"
+        }
+      },
+      "UserFetched": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "62abe4354f232"
+              },
+              "email": {
+                "type": "string",
+                "example": "johnstone@gmail.com"
+              },
+              "password": {
+                "type": "string",
+                "example": "Password@1"
+              },
+              "firstName": {
+                "type": "string",
+                "example": "John"
+              },
+              "lastName": {
+                "type": "string",
+                "example": "Stone"
+              },
+              "idNumber": {
+                "type": "string",
+                "example": "2018/251501"
+              },
+              "isStudent": {
+                "type": "boolean",
+                "example": true
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "user fetched"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "UserFetched"
+        }
+      },
+      "UserDeleted": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "user deleted"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "UserDeleted"
+        }
+      },
+      "UserNotFound": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "user not found"
+          },
+          "status": {
+            "type": "number",
+            "example": 404
+          }
+        },
+        "xml": {
+          "name": "UserNotFound"
+        }
+      },
+      "InvalidUserId": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "invalid user id"
+          },
+          "status": {
+            "type": "number",
+            "example": 406
+          }
+        },
+        "xml": {
+          "name": "InvalidUserId"
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
