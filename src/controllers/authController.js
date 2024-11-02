@@ -41,7 +41,7 @@ const authController = {
       res.status(201).json({
         status: 201,
         message: "User registered successfully",
-        userId: user._id,
+        userId: user,
       });
     } catch (error) {
       res.status(500).json({ status: 500, message: error.message });

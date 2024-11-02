@@ -5,7 +5,7 @@ const authRoute = express.Router();
 const authController = require("../controllers/authController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
-const { register, login } = authController;
+const { register, login, changePassword } = authController;
 
 authRoute.post(
   "/register",
@@ -65,7 +65,7 @@ authRoute.post(
     }
     */
   authMiddleware,
-  authController.changePassword
+  changePassword
 );
 
 module.exports = authRoute;

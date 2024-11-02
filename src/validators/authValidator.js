@@ -14,11 +14,7 @@ const registerValidation = (data) => {
         "password"
       )
       .message(
-        ```
-        Password must be between 8 and 32 characters long 
-        and contain at least one uppercase letter 
-        and at least one number with a spacial character.
-        ```
+        "Password must be between 8 and 32 characters long and contain at least one uppercase letter and at least one number with a spacial character."
       )
       .required(),
     isStudent: Joi.bool().required(),

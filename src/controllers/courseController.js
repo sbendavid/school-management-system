@@ -26,8 +26,7 @@ const courseController = {
         status,
       });
       return res.status(201).json({
-        status: "success",
-        statusCode: 201,
+        status: "201",
         message: "Course created",
         data: newCourse,
       });

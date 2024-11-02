@@ -4,6 +4,7 @@ const indexRoute = express.Router();
 
 const authRoute = require("./authRoute");
 const courseRoute = require("./courseRoute");
+const userRoute = require("./userRoute");
 
 indexRoute.use(
   "/auth",
@@ -12,10 +13,17 @@ indexRoute.use(
   authRoute
 );
 indexRoute.use(
-  "/course",
+  "/courses",
   // #swagger.tags = ['course']
   // #swagger.security = [{ bearerAuth: true }],
   courseRoute
+);
+
+indexRoute.use(
+  "/users",
+  // #swagger.tags = ['user']
+  // #swagger.security = [{ bearerAuth: true }],
+  userRoute
 );
 
 module.exports = indexRoute;
