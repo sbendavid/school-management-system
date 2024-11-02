@@ -7,10 +7,15 @@ const courseRoute = require("./courseRoute");
 
 indexRoute.use(
   "/auth",
-  // #swagger.tags = ['users']
+  // #swagger.tags = ['auth']
   // #swagger.security = [{ bearerAuth: true }],
   authRoute
 );
-indexRoute.use("/course", courseRoute);
+indexRoute.use(
+  "/course",
+  // #swagger.tags = ['course']
+  // #swagger.security = [{ bearerAuth: true }],
+  courseRoute
+);
 
 module.exports = indexRoute;

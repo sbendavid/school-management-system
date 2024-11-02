@@ -2,8 +2,8 @@ const Course = require("../models/Course.js");
 
 const CourseService = {
   async createCourse(data) {
-    const Course = new Course(data);
-    return await Course.save();
+    const course = new Course(data);
+    return await course.save();
   },
 
   async getCourses() {
