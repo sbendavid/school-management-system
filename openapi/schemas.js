@@ -23,18 +23,31 @@ const User = {
   lastName: "Stone",
   idNumber: "2018/251501",
   isStudent: true,
+  phoneNumber: "08131542720",
+  dateOfBirth: "1990-05-15",
+  placeOfBirth: "New York City",
+  education: {
+    university: "New York University",
+    degree: "Bachelor of Engineering",
+    startDate: "2018-01-01",
+    endDate: "2022-06-30",
+    city: "New York City",
+  },
 };
 
 const User_d = makeDB({
   ...User,
 });
 
-const Student = {
-  department: "62abe4354f232",
-  level: 100,
-  isCourseRep: false,
-  repCourses: [],
+const Course = {
+  class: "100L",
+  code: "Engr 101",
+  status: "normal",
 };
+
+const Course_d = makeDB({
+  ...Course,
+});
 
 const schemas = {
   Login: Login,
@@ -83,6 +96,16 @@ const schemas = {
   UserDeleted: ModelDeleted("user"),
   UserNotFound: ModelNotFound("user"),
   InvalidUserId: InvalidId("user"),
+
+  Course,
+  CourseRequired: ValueRequired(Course),
+  CourseCreated: ModelCreated("course", Course_d),
+  CourseUpdated: ModelUpdated("course", Course_d),
+  CoursesFetched: ModelsFetched("courses", Course_d),
+  CourseFetched: ModelFetched("course", Course_d),
+  CourseDeleted: ModelDeleted("course"),
+  CourseNotFound: ModelNotFound("course"),
+  InvalidCourseId: InvalidId("course"),
 };
 
 module.exports = schemas;

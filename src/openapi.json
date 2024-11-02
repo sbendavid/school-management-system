@@ -22,7 +22,7 @@
     "/auth/register": {
       "post": {
         "tags": [
-          "users"
+          "auth"
         ],
         "summary": "Create user",
         "description": "",
@@ -92,7 +92,7 @@
     "/auth/login": {
       "post": {
         "tags": [
-          "users"
+          "auth"
         ],
         "summary": "Login",
         "description": "",
@@ -186,7 +186,7 @@
     "/auth/change_password": {
       "post": {
         "tags": [
-          "users"
+          "auth"
         ],
         "summary": "change password",
         "description": "",
@@ -293,124 +293,295 @@
     },
     "/course/": {
       "post": {
+        "tags": [
+          "course"
+        ],
+        "summary": "Create course",
         "description": "",
         "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseCreated"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseCreated"
+                }
+              }
+            }
+          },
           "201": {
             "description": "Created"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseRequired"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseRequired"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "500": {
             "description": "Internal Server Error"
           }
         },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "user": {
-                    "example": "any"
-                  },
-                  "class": {
-                    "example": "any"
-                  },
-                  "code": {
-                    "example": "any"
-                  },
-                  "status": {
-                    "example": "any"
-                  }
-                }
+                "$ref": "#/components/schemas/Course"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Course"
               }
             }
           }
         }
       },
       "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/course/{id}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
+        "tags": [
+          "course"
         ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "put": {
+        "summary": "Fetch courses",
         "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseFetched"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseFetched"
+                }
+              }
+            }
           },
-          "404": {
-            "description": "Not Found"
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "500": {
             "description": "Internal Server Error"
           }
         },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ]
+      }
+    },
+    "/course/{id}": {
+      "get": {
+        "tags": [
+          "course"
+        ],
+        "summary": "Fetch courses",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseFetched"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseFetched"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseNotFound"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidCourseId"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidCourseId"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "course"
+        ],
+        "summary": "Update a course",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseUpdated"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseUpdated"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseNotFound"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidCourseId"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidCourseId"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "example": "any"
-                  },
-                  "grade": {
-                    "example": "any"
-                  },
-                  "age": {
-                    "example": "any"
-                  }
-                }
+                "$ref": "#/components/schemas/Course"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Course"
               }
             }
           }
         }
       },
       "delete": {
+        "tags": [
+          "course"
+        ],
+        "summary": "Delete a course",
         "description": "",
         "parameters": [
           {
@@ -424,13 +595,161 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseDeleted"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseDeleted"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseNotFound"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidCourseId"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidCourseId"
+                }
+              }
+            }
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ]
+      }
+    },
+    "/course/{id}/status": {
+      "patch": {
+        "tags": [
+          "course"
+        ],
+        "summary": "Update a course status",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseUpdated"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseUpdated"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseNotFound"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidCourseId"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidCourseId"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Course"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Course"
+              }
+            }
           }
         }
       }
@@ -460,6 +779,35 @@
           "data": {
             "type": "object",
             "properties": {
+              "dateOfBirth": {
+                "type": "string",
+                "example": "1990-05-15"
+              },
+              "education": {
+                "type": "object",
+                "properties": {
+                  "university": {
+                    "type": "string",
+                    "example": "New York University"
+                  },
+                  "degree": {
+                    "type": "string",
+                    "example": "Bachelor of Engineering"
+                  },
+                  "startDate": {
+                    "type": "string",
+                    "example": "2018-01-01"
+                  },
+                  "endDate": {
+                    "type": "string",
+                    "example": "2022-06-30"
+                  },
+                  "city": {
+                    "type": "string",
+                    "example": "New York City"
+                  }
+                }
+              },
               "email": {
                 "type": "string",
                 "example": "johnstone@gmail.com"
@@ -483,6 +831,14 @@
               "password": {
                 "type": "string",
                 "example": "Password@1"
+              },
+              "phoneNumber": {
+                "type": "string",
+                "example": "08131542720"
+              },
+              "placeOfBirth": {
+                "type": "string",
+                "example": "New York City"
               }
             }
           },
@@ -609,6 +965,43 @@
           "isStudent": {
             "type": "boolean",
             "example": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "example": "08131542720"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "example": "1990-05-15"
+          },
+          "placeOfBirth": {
+            "type": "string",
+            "example": "New York City"
+          },
+          "education": {
+            "type": "object",
+            "properties": {
+              "university": {
+                "type": "string",
+                "example": "New York University"
+              },
+              "degree": {
+                "type": "string",
+                "example": "Bachelor of Engineering"
+              },
+              "startDate": {
+                "type": "string",
+                "example": "2018-01-01"
+              },
+              "endDate": {
+                "type": "string",
+                "example": "2022-06-30"
+              },
+              "city": {
+                "type": "string",
+                "example": "New York City"
+              }
+            }
           }
         },
         "xml": {
@@ -644,12 +1037,28 @@
               "isStudent": {
                 "type": "string",
                 "example": "isStudent is required"
+              },
+              "phoneNumber": {
+                "type": "string",
+                "example": "phoneNumber is required"
+              },
+              "dateOfBirth": {
+                "type": "string",
+                "example": "dateOfBirth is required"
+              },
+              "placeOfBirth": {
+                "type": "string",
+                "example": "placeOfBirth is required"
+              },
+              "education": {
+                "type": "string",
+                "example": "education is required"
               }
             }
           },
           "message": {
             "type": "string",
-            "example": "email is required, password is required, firstName is required, lastName is required, idNumber is required, isStudent is required"
+            "example": "email is required, password is required, firstName is required, lastName is required, idNumber is required, isStudent is required, phoneNumber is required, dateOfBirth is required, placeOfBirth is required, education is required"
           },
           "status": {
             "type": "number",
@@ -693,6 +1102,43 @@
               "isStudent": {
                 "type": "boolean",
                 "example": true
+              },
+              "phoneNumber": {
+                "type": "string",
+                "example": "08131542720"
+              },
+              "dateOfBirth": {
+                "type": "string",
+                "example": "1990-05-15"
+              },
+              "placeOfBirth": {
+                "type": "string",
+                "example": "New York City"
+              },
+              "education": {
+                "type": "object",
+                "properties": {
+                  "university": {
+                    "type": "string",
+                    "example": "New York University"
+                  },
+                  "degree": {
+                    "type": "string",
+                    "example": "Bachelor of Engineering"
+                  },
+                  "startDate": {
+                    "type": "string",
+                    "example": "2018-01-01"
+                  },
+                  "endDate": {
+                    "type": "string",
+                    "example": "2022-06-30"
+                  },
+                  "city": {
+                    "type": "string",
+                    "example": "New York City"
+                  }
+                }
               },
               "createdAt": {
                 "type": "string",
@@ -750,6 +1196,43 @@
               "isStudent": {
                 "type": "boolean",
                 "example": true
+              },
+              "phoneNumber": {
+                "type": "string",
+                "example": "08131542720"
+              },
+              "dateOfBirth": {
+                "type": "string",
+                "example": "1990-05-15"
+              },
+              "placeOfBirth": {
+                "type": "string",
+                "example": "New York City"
+              },
+              "education": {
+                "type": "object",
+                "properties": {
+                  "university": {
+                    "type": "string",
+                    "example": "New York University"
+                  },
+                  "degree": {
+                    "type": "string",
+                    "example": "Bachelor of Engineering"
+                  },
+                  "startDate": {
+                    "type": "string",
+                    "example": "2018-01-01"
+                  },
+                  "endDate": {
+                    "type": "string",
+                    "example": "2022-06-30"
+                  },
+                  "city": {
+                    "type": "string",
+                    "example": "New York City"
+                  }
+                }
               },
               "createdAt": {
                 "type": "string",
@@ -810,6 +1293,43 @@
                   "type": "boolean",
                   "example": true
                 },
+                "phoneNumber": {
+                  "type": "string",
+                  "example": "08131542720"
+                },
+                "dateOfBirth": {
+                  "type": "string",
+                  "example": "1990-05-15"
+                },
+                "placeOfBirth": {
+                  "type": "string",
+                  "example": "New York City"
+                },
+                "education": {
+                  "type": "object",
+                  "properties": {
+                    "university": {
+                      "type": "string",
+                      "example": "New York University"
+                    },
+                    "degree": {
+                      "type": "string",
+                      "example": "Bachelor of Engineering"
+                    },
+                    "startDate": {
+                      "type": "string",
+                      "example": "2018-01-01"
+                    },
+                    "endDate": {
+                      "type": "string",
+                      "example": "2022-06-30"
+                    },
+                    "city": {
+                      "type": "string",
+                      "example": "New York City"
+                    }
+                  }
+                },
                 "createdAt": {
                   "type": "string",
                   "example": "2024-09-01T01:41:42.667Z"
@@ -867,6 +1387,43 @@
               "isStudent": {
                 "type": "boolean",
                 "example": true
+              },
+              "phoneNumber": {
+                "type": "string",
+                "example": "08131542720"
+              },
+              "dateOfBirth": {
+                "type": "string",
+                "example": "1990-05-15"
+              },
+              "placeOfBirth": {
+                "type": "string",
+                "example": "New York City"
+              },
+              "education": {
+                "type": "object",
+                "properties": {
+                  "university": {
+                    "type": "string",
+                    "example": "New York University"
+                  },
+                  "degree": {
+                    "type": "string",
+                    "example": "Bachelor of Engineering"
+                  },
+                  "startDate": {
+                    "type": "string",
+                    "example": "2018-01-01"
+                  },
+                  "endDate": {
+                    "type": "string",
+                    "example": "2022-06-30"
+                  },
+                  "city": {
+                    "type": "string",
+                    "example": "New York City"
+                  }
+                }
               },
               "createdAt": {
                 "type": "string",
@@ -937,6 +1494,290 @@
         },
         "xml": {
           "name": "InvalidUserId"
+        }
+      },
+      "Course": {
+        "type": "object",
+        "properties": {
+          "class": {
+            "type": "string",
+            "example": "100L"
+          },
+          "code": {
+            "type": "string",
+            "example": "Engr 101"
+          },
+          "status": {
+            "type": "string",
+            "example": "normal"
+          }
+        },
+        "xml": {
+          "name": "Course"
+        }
+      },
+      "CourseRequired": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "object",
+            "properties": {
+              "class": {
+                "type": "string",
+                "example": "class is required"
+              },
+              "code": {
+                "type": "string",
+                "example": "code is required"
+              },
+              "status": {
+                "type": "string",
+                "example": "status is required"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "class is required, code is required, status is required"
+          },
+          "status": {
+            "type": "number",
+            "example": 400
+          }
+        },
+        "xml": {
+          "name": "CourseRequired"
+        }
+      },
+      "CourseCreated": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "62abe4354f232"
+              },
+              "class": {
+                "type": "string",
+                "example": "100L"
+              },
+              "code": {
+                "type": "string",
+                "example": "Engr 101"
+              },
+              "status": {
+                "type": "string",
+                "example": "normal"
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "course created"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "CourseCreated"
+        }
+      },
+      "CourseUpdated": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "62abe4354f232"
+              },
+              "class": {
+                "type": "string",
+                "example": "100L"
+              },
+              "code": {
+                "type": "string",
+                "example": "Engr 101"
+              },
+              "status": {
+                "type": "string",
+                "example": "normal"
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "course updated"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "CourseUpdated"
+        }
+      },
+      "CoursesFetched": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "62abe4354f232"
+                },
+                "class": {
+                  "type": "string",
+                  "example": "100L"
+                },
+                "code": {
+                  "type": "string",
+                  "example": "Engr 101"
+                },
+                "status": {
+                  "type": "string",
+                  "example": "normal"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2024-09-01T01:41:42.667Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2024-09-01T01:41:42.667Z"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "courses fetched"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "CoursesFetched"
+        }
+      },
+      "CourseFetched": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "62abe4354f232"
+              },
+              "class": {
+                "type": "string",
+                "example": "100L"
+              },
+              "code": {
+                "type": "string",
+                "example": "Engr 101"
+              },
+              "status": {
+                "type": "string",
+                "example": "normal"
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "course fetched"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "CourseFetched"
+        }
+      },
+      "CourseDeleted": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "course deleted"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "CourseDeleted"
+        }
+      },
+      "CourseNotFound": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "course not found"
+          },
+          "status": {
+            "type": "number",
+            "example": 404
+          }
+        },
+        "xml": {
+          "name": "CourseNotFound"
+        }
+      },
+      "InvalidCourseId": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "invalid course id"
+          },
+          "status": {
+            "type": "number",
+            "example": 406
+          }
+        },
+        "xml": {
+          "name": "InvalidCourseId"
         }
       }
     },

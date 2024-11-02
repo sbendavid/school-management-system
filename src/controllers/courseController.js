@@ -43,7 +43,7 @@ const courseController = {
         .status(200)
         .json({ status: 200, message: "Courses fetched", data: courses });
     } catch (error) {
-      res.status(400).json({ error: error.message });
+      return res.status(500).json({ status: 500, message: error.message });
     }
   },
 
