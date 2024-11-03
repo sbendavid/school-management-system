@@ -17,26 +17,16 @@ const Login = {
   password: "Password@1",
 };
 
-const User = {
+const Auth = {
   ...Login,
   firstName: "John",
   lastName: "Stone",
   idNumber: "2018/251501",
   isStudent: true,
-  phoneNumber: "08131542720",
-  dateOfBirth: "1990-05-15",
-  placeOfBirth: "New York City",
-  education: {
-    university: "New York University",
-    degree: "Bachelor of Engineering",
-    startDate: "2018-01-01",
-    endDate: "2022-06-30",
-    city: "New York City",
-  },
 };
 
-const User_d = makeDB({
-  ...User,
+const Auth_d = makeDB({
+  ...Auth,
 });
 
 const Course = {
@@ -47,6 +37,25 @@ const Course = {
 
 const Course_d = makeDB({
   ...Course,
+});
+
+const User = {
+  firstName: "John",
+  lastName: "Doe",
+  email: "johndoe@gmail.com",
+  password: "Password123",
+  role: "admin",
+};
+
+const Position = {
+  role: "Head Teacher",
+  class: "HDT",
+  course: "Engr 101",
+};
+
+const Position_d = makeDB({
+  ...Position,
+  user: Auth_d.id,
 });
 
 const schemas = {
@@ -87,12 +96,12 @@ const schemas = {
     status: 409,
   }),
 
-  User,
-  UserRequired: ValueRequired(User),
-  UserCreated: ModelCreated("user", User_d),
-  UserUpdated: ModelUpdated("user", User_d),
-  UsersFetched: ModelsFetched("users", User_d),
-  UserFetched: ModelFetched("user", User_d),
+  Auth,
+  UserRequired: ValueRequired(Auth),
+  UserCreated: ModelCreated("user", Auth_d),
+  UserUpdated: ModelUpdated("user", Auth_d),
+  UsersFetched: ModelsFetched("users", Auth_d),
+  UserFetched: ModelFetched("user", Auth_d),
   UserDeleted: ModelDeleted("user"),
   UserNotFound: ModelNotFound("user"),
   InvalidUserId: InvalidId("user"),
@@ -106,6 +115,13 @@ const schemas = {
   CourseDeleted: ModelDeleted("course"),
   CourseNotFound: ModelNotFound("course"),
   InvalidCourseId: InvalidId("course"),
+
+  Position,
+  PositionRequired: ValueRequired(Position),
+  PositionCreated: ModelCreated("position", Position_d),
+  PositionDeleted: ModelDeleted("position"),
+  PositionNotFound: ModelNotFound("position"),
+  InvalidPositionId: InvalidId("position"),
 };
 
 module.exports = schemas;

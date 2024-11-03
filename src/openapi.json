@@ -801,7 +801,7 @@
         },
         "security": [
           {
-            "bearerAuth": false
+            "bearerAuth": true
           }
         ],
         "requestBody": {
@@ -950,6 +950,9 @@
               }
             }
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "404": {
             "description": "Not Found",
             "content": {
@@ -986,7 +989,7 @@
         },
         "security": [
           {
-            "bearerAuth": false
+            "bearerAuth": true
           }
         ],
         "requestBody": {
@@ -1073,7 +1076,7 @@
         },
         "security": [
           {
-            "bearerAuth": false
+            "bearerAuth": true
           }
         ]
       }
@@ -1147,7 +1150,7 @@
         },
         "security": [
           {
-            "bearerAuth": false
+            "bearerAuth": true
           }
         ],
         "requestBody": {
@@ -1165,6 +1168,160 @@
             }
           }
         }
+      }
+    },
+    "/users/{id}/position": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Create user position",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositionCreated"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositionCreated"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositionRequired"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositionRequired"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Position"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Position"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/positions/{id}": {
+      "delete": {
+        "tags": [
+          "position"
+        ],
+        "summary": "Delete user position",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositionDeleted"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositionDeleted"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositionNotFound"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositionNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidPositionId"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidPositionId"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ]
       }
     }
   },
@@ -1192,66 +1349,25 @@
           "data": {
             "type": "object",
             "properties": {
-              "dateOfBirth": {
-                "type": "string",
-                "example": "1990-05-15"
-              },
-              "education": {
-                "type": "object",
-                "properties": {
-                  "university": {
-                    "type": "string",
-                    "example": "New York University"
-                  },
-                  "degree": {
-                    "type": "string",
-                    "example": "Bachelor of Engineering"
-                  },
-                  "startDate": {
-                    "type": "string",
-                    "example": "2018-01-01"
-                  },
-                  "endDate": {
-                    "type": "string",
-                    "example": "2022-06-30"
-                  },
-                  "city": {
-                    "type": "string",
-                    "example": "New York City"
-                  }
-                }
-              },
               "email": {
                 "type": "string",
-                "example": "johnstone@gmail.com"
+                "example": "johndoe@gmail.com"
               },
               "firstName": {
                 "type": "string",
                 "example": "John"
               },
-              "idNumber": {
-                "type": "string",
-                "example": "2018/251501"
-              },
-              "isStudent": {
-                "type": "boolean",
-                "example": true
-              },
               "lastName": {
                 "type": "string",
-                "example": "Stone"
+                "example": "Doe"
               },
               "password": {
                 "type": "string",
-                "example": "Password@1"
+                "example": "Password123"
               },
-              "phoneNumber": {
+              "role": {
                 "type": "string",
-                "example": "08131542720"
-              },
-              "placeOfBirth": {
-                "type": "string",
-                "example": "New York City"
+                "example": "admin"
               }
             }
           },
@@ -1352,7 +1468,7 @@
           "name": "UserEmailExists"
         }
       },
-      "User": {
+      "Auth": {
         "type": "object",
         "properties": {
           "email": {
@@ -1378,47 +1494,10 @@
           "isStudent": {
             "type": "boolean",
             "example": true
-          },
-          "phoneNumber": {
-            "type": "string",
-            "example": "08131542720"
-          },
-          "dateOfBirth": {
-            "type": "string",
-            "example": "1990-05-15"
-          },
-          "placeOfBirth": {
-            "type": "string",
-            "example": "New York City"
-          },
-          "education": {
-            "type": "object",
-            "properties": {
-              "university": {
-                "type": "string",
-                "example": "New York University"
-              },
-              "degree": {
-                "type": "string",
-                "example": "Bachelor of Engineering"
-              },
-              "startDate": {
-                "type": "string",
-                "example": "2018-01-01"
-              },
-              "endDate": {
-                "type": "string",
-                "example": "2022-06-30"
-              },
-              "city": {
-                "type": "string",
-                "example": "New York City"
-              }
-            }
           }
         },
         "xml": {
-          "name": "User"
+          "name": "Auth"
         }
       },
       "UserRequired": {
@@ -1450,28 +1529,12 @@
               "isStudent": {
                 "type": "string",
                 "example": "isStudent is required"
-              },
-              "phoneNumber": {
-                "type": "string",
-                "example": "phoneNumber is required"
-              },
-              "dateOfBirth": {
-                "type": "string",
-                "example": "dateOfBirth is required"
-              },
-              "placeOfBirth": {
-                "type": "string",
-                "example": "placeOfBirth is required"
-              },
-              "education": {
-                "type": "string",
-                "example": "education is required"
               }
             }
           },
           "message": {
             "type": "string",
-            "example": "email is required, password is required, firstName is required, lastName is required, idNumber is required, isStudent is required, phoneNumber is required, dateOfBirth is required, placeOfBirth is required, education is required"
+            "example": "email is required, password is required, firstName is required, lastName is required, idNumber is required, isStudent is required"
           },
           "status": {
             "type": "number",
@@ -1515,43 +1578,6 @@
               "isStudent": {
                 "type": "boolean",
                 "example": true
-              },
-              "phoneNumber": {
-                "type": "string",
-                "example": "08131542720"
-              },
-              "dateOfBirth": {
-                "type": "string",
-                "example": "1990-05-15"
-              },
-              "placeOfBirth": {
-                "type": "string",
-                "example": "New York City"
-              },
-              "education": {
-                "type": "object",
-                "properties": {
-                  "university": {
-                    "type": "string",
-                    "example": "New York University"
-                  },
-                  "degree": {
-                    "type": "string",
-                    "example": "Bachelor of Engineering"
-                  },
-                  "startDate": {
-                    "type": "string",
-                    "example": "2018-01-01"
-                  },
-                  "endDate": {
-                    "type": "string",
-                    "example": "2022-06-30"
-                  },
-                  "city": {
-                    "type": "string",
-                    "example": "New York City"
-                  }
-                }
               },
               "createdAt": {
                 "type": "string",
@@ -1609,43 +1635,6 @@
               "isStudent": {
                 "type": "boolean",
                 "example": true
-              },
-              "phoneNumber": {
-                "type": "string",
-                "example": "08131542720"
-              },
-              "dateOfBirth": {
-                "type": "string",
-                "example": "1990-05-15"
-              },
-              "placeOfBirth": {
-                "type": "string",
-                "example": "New York City"
-              },
-              "education": {
-                "type": "object",
-                "properties": {
-                  "university": {
-                    "type": "string",
-                    "example": "New York University"
-                  },
-                  "degree": {
-                    "type": "string",
-                    "example": "Bachelor of Engineering"
-                  },
-                  "startDate": {
-                    "type": "string",
-                    "example": "2018-01-01"
-                  },
-                  "endDate": {
-                    "type": "string",
-                    "example": "2022-06-30"
-                  },
-                  "city": {
-                    "type": "string",
-                    "example": "New York City"
-                  }
-                }
               },
               "createdAt": {
                 "type": "string",
@@ -1706,43 +1695,6 @@
                   "type": "boolean",
                   "example": true
                 },
-                "phoneNumber": {
-                  "type": "string",
-                  "example": "08131542720"
-                },
-                "dateOfBirth": {
-                  "type": "string",
-                  "example": "1990-05-15"
-                },
-                "placeOfBirth": {
-                  "type": "string",
-                  "example": "New York City"
-                },
-                "education": {
-                  "type": "object",
-                  "properties": {
-                    "university": {
-                      "type": "string",
-                      "example": "New York University"
-                    },
-                    "degree": {
-                      "type": "string",
-                      "example": "Bachelor of Engineering"
-                    },
-                    "startDate": {
-                      "type": "string",
-                      "example": "2018-01-01"
-                    },
-                    "endDate": {
-                      "type": "string",
-                      "example": "2022-06-30"
-                    },
-                    "city": {
-                      "type": "string",
-                      "example": "New York City"
-                    }
-                  }
-                },
                 "createdAt": {
                   "type": "string",
                   "example": "2024-09-01T01:41:42.667Z"
@@ -1800,43 +1752,6 @@
               "isStudent": {
                 "type": "boolean",
                 "example": true
-              },
-              "phoneNumber": {
-                "type": "string",
-                "example": "08131542720"
-              },
-              "dateOfBirth": {
-                "type": "string",
-                "example": "1990-05-15"
-              },
-              "placeOfBirth": {
-                "type": "string",
-                "example": "New York City"
-              },
-              "education": {
-                "type": "object",
-                "properties": {
-                  "university": {
-                    "type": "string",
-                    "example": "New York University"
-                  },
-                  "degree": {
-                    "type": "string",
-                    "example": "Bachelor of Engineering"
-                  },
-                  "startDate": {
-                    "type": "string",
-                    "example": "2018-01-01"
-                  },
-                  "endDate": {
-                    "type": "string",
-                    "example": "2022-06-30"
-                  },
-                  "city": {
-                    "type": "string",
-                    "example": "New York City"
-                  }
-                }
               },
               "createdAt": {
                 "type": "string",
@@ -2191,6 +2106,156 @@
         },
         "xml": {
           "name": "InvalidCourseId"
+        }
+      },
+      "Position": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string",
+            "example": "Head Teacher"
+          },
+          "class": {
+            "type": "string",
+            "example": "HDT"
+          },
+          "course": {
+            "type": "string",
+            "example": "Engr 101"
+          }
+        },
+        "xml": {
+          "name": "Position"
+        }
+      },
+      "PositionRequired": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "object",
+            "properties": {
+              "role": {
+                "type": "string",
+                "example": "role is required"
+              },
+              "class": {
+                "type": "string",
+                "example": "class is required"
+              },
+              "course": {
+                "type": "string",
+                "example": "course is required"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "role is required, class is required, course is required"
+          },
+          "status": {
+            "type": "number",
+            "example": 400
+          }
+        },
+        "xml": {
+          "name": "PositionRequired"
+        }
+      },
+      "PositionCreated": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "62abe4354f232"
+              },
+              "role": {
+                "type": "string",
+                "example": "Head Teacher"
+              },
+              "class": {
+                "type": "string",
+                "example": "HDT"
+              },
+              "course": {
+                "type": "string",
+                "example": "Engr 101"
+              },
+              "user": {
+                "type": "string",
+                "example": "62abe4354f232"
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "position created"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "PositionCreated"
+        }
+      },
+      "PositionDeleted": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "position deleted"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "PositionDeleted"
+        }
+      },
+      "PositionNotFound": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "position not found"
+          },
+          "status": {
+            "type": "number",
+            "example": 404
+          }
+        },
+        "xml": {
+          "name": "PositionNotFound"
+        }
+      },
+      "InvalidPositionId": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "invalid position id"
+          },
+          "status": {
+            "type": "number",
+            "example": 406
+          }
+        },
+        "xml": {
+          "name": "InvalidPositionId"
         }
       }
     },
