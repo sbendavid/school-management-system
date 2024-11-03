@@ -1,7 +1,9 @@
 const UserService = require("../services/userService");
+const PositionService = require("../services/positionService");
 const { hashPassword } = require("../utils/bcrypt");
 const { registerValidation } = require("../validators/authValidator");
-const PositionService = require("../services/positionService");
+const { positionValidation } = require("../validators/positionValidator");
+const { userValidation } = require("../validators/userValidator");
 
 const userController = {
   async createUser(req, res) {
@@ -86,6 +88,13 @@ const userController = {
       expertise,
     } = req.body;
 
+    const { error } = userValidation(req.body);
+    if (error) {
+      return res
+        .status(400)
+        .json({ status: 400, message: error.details[0].message });
+    }
+
     try {
       const user = await UserService.getUserById(id);
       if (!user) {
@@ -155,6 +164,13 @@ const userController = {
   async assignPosition(req, res) {
     const { id } = req.params;
     const { role, class: className, course } = req.body;
+
+    const { error } = positionValidation(req.body);
+    if (error) {
+      return res
+        .status(400)
+        .json({ status: 400, message: error.details[0].message });
+    }
 
     try {
       const user = await UserService.getUserById(id);
