@@ -1,6 +1,7 @@
 const UserService = require("../services/userService");
 const { hashPassword } = require("../utils/bcrypt");
 const { registerValidation } = require("../validators/authValidator");
+const PositionService = require("../services/positionService");
 
 const userController = {
   async createUser(req, res) {
@@ -156,14 +157,24 @@ const userController = {
     const { role, class: className, course } = req.body;
 
     try {
-      const position = await UserService.assignPosition(id, {
+      const user = await UserService.getUserById(id);
+
+      if (!user) {
+        return res.status(404).json({ status: 404, message: "User not found" });
+      }
+
+      const position = await PositionService.createPosition({
+        user: user._id,
         role,
         class: className,
         course,
       });
-      return res.status(201).json({ status: "success", data: position });
+
+      return res
+        .status(201)
+        .json({ status: 201, message: "Position created", data: position });
     } catch (error) {
-      return res.status(400).json({ status: "error", message: error.message });
+      return res.status(500).json({ status: 500, message: error.message });
     }
   },
 };

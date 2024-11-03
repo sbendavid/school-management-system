@@ -11,6 +11,7 @@ const {
   updateUser,
   updateUserStatus,
   deleteUser,
+  assignPosition,
 } = userController;
 
 userRoute.post(
@@ -113,6 +114,23 @@ userRoute.delete(
       }
     */
   deleteUser
+);
+userRoute.post(
+  "/:id/position",
+  /**
+      #swagger.summary = "Create user position"
+      #swagger.requestBody = {
+          required: true,
+          schema: { $ref: "#/components/schemas/Position" }
+      }
+      #swagger.responses[200] = {
+          schema:  { $ref: "#/components/schemas/PositionCreated" }
+      }
+      #swagger.responses[400] =  {
+          schema:  { $ref: "#/components/schemas/PositionRequired" }
+      }
+    */
+  assignPosition
 );
 
 module.exports = userRoute;

@@ -1,6 +1,6 @@
-const Position = require("../models/position.js");
+const Position = require("../models/position");
 
-const positionService = {
+const PositionService = {
   async createPosition(data) {
     const position = new Position(data);
     return await position.save();
@@ -28,4 +28,4 @@ const positionService = {
   },
 };
 
-module.exports = positionService;
+module.exports = PositionService;
