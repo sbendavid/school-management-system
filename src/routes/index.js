@@ -6,6 +6,7 @@ const authRoute = require("./authRoute");
 const courseRoute = require("./courseRoute");
 const userRoute = require("./userRoute");
 const positionRoute = require("./positionRoute");
+const eventRoute = require("./eventRoute");
 
 indexRoute.use(
   "/auth",
@@ -32,6 +33,13 @@ indexRoute.use(
   // #swagger.tags = ['position']
   // #swagger.security = [{ bearerAuth: true }],
   positionRoute
+);
+
+indexRoute.use(
+  "/events",
+  // #swagger.tags = ['event']
+  // #swagger.security = [{ bearerAuth: true }],
+  eventRoute
 );
 
 module.exports = indexRoute;
