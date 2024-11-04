@@ -1,22 +1,30 @@
 const express = require("express");
-const dotenv = require("dotenv");
+const cors = require("cors");
 
 const indexRoute = require("./src/routes/index");
 const CONFIG = require("./src/config/config");
 const connectDB = require("./src/config/db");
+const swaggerDocs = require("./src/utils/swagger");
 
 const PORT = CONFIG.ENV.PORT;
 
 // Initialize app and environment variables
-dotenv.config();
 const app = express();
 app.use(express.json());
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 
 // Connect to the database
 connectDB();
 
 // Route middlewares
 app.use("/api/v1", indexRoute);
+
+swaggerDocs(app);
 
 // 404 handler
 app.use((req, res) => {

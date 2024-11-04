@@ -1,0 +1,3071 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "School Management API",
+    "description": "API documentation for managing students, teachers, and parents",
+    "version": "1.0.0",
+    "contact": {
+      "name": "sbendavid"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1",
+      "description": "Local Server"
+    },
+    {
+      "url": "https://not-hosted-yet.onrender.com/api/",
+      "description": "Remote Host"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Create user",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserCreated"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserCreated"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRequired"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRequired"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Login",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginSuccess"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginSuccess"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidEmailOrPassword"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidEmailOrPassword"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidPassword"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidPassword"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailDoesNotExists"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailDoesNotExists"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/change_password": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "change password",
+        "description": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginSuccess"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginSuccess"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidEmailOrPassword"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidEmailOrPassword"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidPassword"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidPassword"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailDoesNotExists"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailDoesNotExists"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "currentPassword": {
+                    "example": "any"
+                  },
+                  "newPassword": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/courses/": {
+      "post": {
+        "tags": [
+          "course"
+        ],
+        "summary": "Create course",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseCreated"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseCreated"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseRequired"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseRequired"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Course"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Course"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "course"
+        ],
+        "summary": "Fetch courses",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseFetched"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseFetched"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ]
+      }
+    },
+    "/courses/{id}": {
+      "get": {
+        "tags": [
+          "course"
+        ],
+        "summary": "Fetch courses",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseFetched"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseFetched"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseNotFound"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidCourseId"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidCourseId"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "course"
+        ],
+        "summary": "Update a course",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseUpdated"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseUpdated"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseNotFound"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidCourseId"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidCourseId"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Course"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Course"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "course"
+        ],
+        "summary": "Delete a course",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseDeleted"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseDeleted"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseNotFound"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidCourseId"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidCourseId"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ]
+      }
+    },
+    "/courses/{id}/status": {
+      "patch": {
+        "tags": [
+          "course"
+        ],
+        "summary": "Update a course status",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseUpdated"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseUpdated"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseNotFound"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidCourseId"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidCourseId"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CourseStatus"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/CourseStatus"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Create user",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserCreated"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserCreated"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRequired"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRequired"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Fetch user",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserFetched"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserFetched"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": []
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Fetch user",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserFetched"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserFetched"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserNotFound"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidUserId"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidUserId"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": []
+      },
+      "patch": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Update a user",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserUpdated"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserUpdated"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserNotFound"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidUserId"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidUserId"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Delete a user",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDeleted"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDeleted"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserNotFound"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidUserId"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidUserId"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ]
+      }
+    },
+    "/users/{id}/status": {
+      "patch": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Update a user",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserUpdated"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserUpdated"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserNotFound"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidUserId"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidUserId"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}/position": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Create user position",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositionCreated"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositionCreated"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositionRequired"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositionRequired"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Position"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Position"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/positions/{id}": {
+      "delete": {
+        "tags": [
+          "position"
+        ],
+        "summary": "Delete user position",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositionDeleted"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositionDeleted"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositionNotFound"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositionNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidPositionId"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidPositionId"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ]
+      }
+    },
+    "/events/": {
+      "post": {
+        "tags": [
+          "event"
+        ],
+        "summary": "Create event",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventCreated"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventCreated"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventRequired"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventRequired"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Event"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Event"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "event"
+        ],
+        "summary": "Fetch events",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventFetched"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventFetched"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ]
+      }
+    },
+    "/events/{id}": {
+      "get": {
+        "tags": [
+          "event"
+        ],
+        "summary": "Fetch events",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventFetched"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventFetched"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventNotFound"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidEventId"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidEventId"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "event"
+        ],
+        "summary": "Update a event",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventUpdated"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventUpdated"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventNotFound"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidEventId"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidEventId"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Event"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Event"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "event"
+        ],
+        "summary": "Delete a event",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventDeleted"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventDeleted"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventNotFound"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidEventId"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidEventId"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ]
+      }
+    },
+    "/events/{id}/status": {
+      "patch": {
+        "tags": [
+          "event"
+        ],
+        "summary": "Update a event status",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventUpdated"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventUpdated"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventNotFound"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidEventId"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidEventId"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventStatus"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/EventStatus"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "johnstone@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "Password@1"
+          }
+        },
+        "xml": {
+          "name": "Login"
+        }
+      },
+      "LoginSuccess": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "example": "johndoe@gmail.com"
+              },
+              "firstName": {
+                "type": "string",
+                "example": "John"
+              },
+              "lastName": {
+                "type": "string",
+                "example": "Doe"
+              },
+              "password": {
+                "type": "string",
+                "example": "Password123"
+              },
+              "role": {
+                "type": "string",
+                "example": "admin"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "admin created / login successful"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          },
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZDNhMmM2YjFhYTk3OGYxNzRjZjcyOSIsInR5cGUiOiJhZG1pbiIsImVtYWlsIjoicHJtcHNtYXJ0QG1haWxpbmF0b3IuY29tIiwiaWF0IjoxNzI1MTQ1Nzk4LCJleHAiOjE3MjUxODg5OTh9.HbnQle5FVtGbr3IJiLg-UrE9DxJgdzGTi7onFmFcFsU"
+          }
+        },
+        "xml": {
+          "name": "LoginSuccess"
+        }
+      },
+      "InvalidEmail": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "invalid email"
+          },
+          "status": {
+            "type": "number",
+            "example": 400
+          }
+        },
+        "xml": {
+          "name": "InvalidEmail"
+        }
+      },
+      "InvalidEmailOrPassword": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "invalid email or password"
+          },
+          "status": {
+            "type": "number",
+            "example": 400
+          }
+        },
+        "xml": {
+          "name": "InvalidEmailOrPassword"
+        }
+      },
+      "InvalidPassword": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "invalid password"
+          },
+          "status": {
+            "type": "number",
+            "example": 401
+          }
+        },
+        "xml": {
+          "name": "InvalidPassword"
+        }
+      },
+      "EmailDoesNotExists": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "user with email does not exist"
+          },
+          "status": {
+            "type": "number",
+            "example": 404
+          }
+        },
+        "xml": {
+          "name": "EmailDoesNotExists"
+        }
+      },
+      "UserEmailExists": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "user with email already exists"
+          },
+          "status": {
+            "type": "number",
+            "example": 409
+          }
+        },
+        "xml": {
+          "name": "UserEmailExists"
+        }
+      },
+      "Auth": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "johnstone@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "Password@1"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Stone"
+          },
+          "idNumber": {
+            "type": "string",
+            "example": "2018/251501"
+          },
+          "isStudent": {
+            "type": "boolean",
+            "example": true
+          }
+        },
+        "xml": {
+          "name": "Auth"
+        }
+      },
+      "UserRequired": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "example": "email is required"
+              },
+              "password": {
+                "type": "string",
+                "example": "password is required"
+              },
+              "firstName": {
+                "type": "string",
+                "example": "firstName is required"
+              },
+              "lastName": {
+                "type": "string",
+                "example": "lastName is required"
+              },
+              "idNumber": {
+                "type": "string",
+                "example": "idNumber is required"
+              },
+              "isStudent": {
+                "type": "string",
+                "example": "isStudent is required"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "email is required, password is required, firstName is required, lastName is required, idNumber is required, isStudent is required"
+          },
+          "status": {
+            "type": "number",
+            "example": 400
+          }
+        },
+        "xml": {
+          "name": "UserRequired"
+        }
+      },
+      "UserCreated": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "62abe4354f232"
+              },
+              "email": {
+                "type": "string",
+                "example": "johnstone@gmail.com"
+              },
+              "password": {
+                "type": "string",
+                "example": "Password@1"
+              },
+              "firstName": {
+                "type": "string",
+                "example": "John"
+              },
+              "lastName": {
+                "type": "string",
+                "example": "Stone"
+              },
+              "idNumber": {
+                "type": "string",
+                "example": "2018/251501"
+              },
+              "isStudent": {
+                "type": "boolean",
+                "example": true
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "user created"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "UserCreated"
+        }
+      },
+      "UserUpdated": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "62abe4354f232"
+              },
+              "email": {
+                "type": "string",
+                "example": "johnstone@gmail.com"
+              },
+              "password": {
+                "type": "string",
+                "example": "Password@1"
+              },
+              "firstName": {
+                "type": "string",
+                "example": "John"
+              },
+              "lastName": {
+                "type": "string",
+                "example": "Stone"
+              },
+              "idNumber": {
+                "type": "string",
+                "example": "2018/251501"
+              },
+              "isStudent": {
+                "type": "boolean",
+                "example": true
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "user updated"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "UserUpdated"
+        }
+      },
+      "UsersFetched": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "62abe4354f232"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "johnstone@gmail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "Password@1"
+                },
+                "firstName": {
+                  "type": "string",
+                  "example": "John"
+                },
+                "lastName": {
+                  "type": "string",
+                  "example": "Stone"
+                },
+                "idNumber": {
+                  "type": "string",
+                  "example": "2018/251501"
+                },
+                "isStudent": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2024-09-01T01:41:42.667Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2024-09-01T01:41:42.667Z"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "users fetched"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "UsersFetched"
+        }
+      },
+      "UserFetched": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "62abe4354f232"
+              },
+              "email": {
+                "type": "string",
+                "example": "johnstone@gmail.com"
+              },
+              "password": {
+                "type": "string",
+                "example": "Password@1"
+              },
+              "firstName": {
+                "type": "string",
+                "example": "John"
+              },
+              "lastName": {
+                "type": "string",
+                "example": "Stone"
+              },
+              "idNumber": {
+                "type": "string",
+                "example": "2018/251501"
+              },
+              "isStudent": {
+                "type": "boolean",
+                "example": true
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "user fetched"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "UserFetched"
+        }
+      },
+      "UserDeleted": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "user deleted"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "UserDeleted"
+        }
+      },
+      "UserNotFound": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "user not found"
+          },
+          "status": {
+            "type": "number",
+            "example": 404
+          }
+        },
+        "xml": {
+          "name": "UserNotFound"
+        }
+      },
+      "InvalidUserId": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "invalid user id"
+          },
+          "status": {
+            "type": "number",
+            "example": 406
+          }
+        },
+        "xml": {
+          "name": "InvalidUserId"
+        }
+      },
+      "Course": {
+        "type": "object",
+        "properties": {
+          "class": {
+            "type": "string",
+            "example": "100L"
+          },
+          "code": {
+            "type": "string",
+            "example": "Engr 101"
+          },
+          "status": {
+            "type": "string",
+            "example": "normal"
+          }
+        },
+        "xml": {
+          "name": "Course"
+        }
+      },
+      "CourseRequired": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "object",
+            "properties": {
+              "class": {
+                "type": "string",
+                "example": "class is required"
+              },
+              "code": {
+                "type": "string",
+                "example": "code is required"
+              },
+              "status": {
+                "type": "string",
+                "example": "status is required"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "class is required, code is required, status is required"
+          },
+          "status": {
+            "type": "number",
+            "example": 400
+          }
+        },
+        "xml": {
+          "name": "CourseRequired"
+        }
+      },
+      "CourseCreated": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "62abe4354f232"
+              },
+              "class": {
+                "type": "string",
+                "example": "100L"
+              },
+              "code": {
+                "type": "string",
+                "example": "Engr 101"
+              },
+              "status": {
+                "type": "string",
+                "example": "normal"
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "course created"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "CourseCreated"
+        }
+      },
+      "CourseUpdated": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "62abe4354f232"
+              },
+              "class": {
+                "type": "string",
+                "example": "100L"
+              },
+              "code": {
+                "type": "string",
+                "example": "Engr 101"
+              },
+              "status": {
+                "type": "string",
+                "example": "normal"
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "course updated"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "CourseUpdated"
+        }
+      },
+      "CoursesFetched": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "62abe4354f232"
+                },
+                "class": {
+                  "type": "string",
+                  "example": "100L"
+                },
+                "code": {
+                  "type": "string",
+                  "example": "Engr 101"
+                },
+                "status": {
+                  "type": "string",
+                  "example": "normal"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2024-09-01T01:41:42.667Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2024-09-01T01:41:42.667Z"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "courses fetched"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "CoursesFetched"
+        }
+      },
+      "CourseFetched": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "62abe4354f232"
+              },
+              "class": {
+                "type": "string",
+                "example": "100L"
+              },
+              "code": {
+                "type": "string",
+                "example": "Engr 101"
+              },
+              "status": {
+                "type": "string",
+                "example": "normal"
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "course fetched"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "CourseFetched"
+        }
+      },
+      "CourseDeleted": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "course deleted"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "CourseDeleted"
+        }
+      },
+      "CourseNotFound": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "course not found"
+          },
+          "status": {
+            "type": "number",
+            "example": 404
+          }
+        },
+        "xml": {
+          "name": "CourseNotFound"
+        }
+      },
+      "InvalidCourseId": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "invalid course id"
+          },
+          "status": {
+            "type": "number",
+            "example": 406
+          }
+        },
+        "xml": {
+          "name": "InvalidCourseId"
+        }
+      },
+      "Position": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string",
+            "example": "Head Teacher"
+          },
+          "class": {
+            "type": "string",
+            "example": "HDT"
+          },
+          "course": {
+            "type": "string",
+            "example": "Engr 101"
+          }
+        },
+        "xml": {
+          "name": "Position"
+        }
+      },
+      "PositionRequired": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "object",
+            "properties": {
+              "role": {
+                "type": "string",
+                "example": "role is required"
+              },
+              "class": {
+                "type": "string",
+                "example": "class is required"
+              },
+              "course": {
+                "type": "string",
+                "example": "course is required"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "role is required, class is required, course is required"
+          },
+          "status": {
+            "type": "number",
+            "example": 400
+          }
+        },
+        "xml": {
+          "name": "PositionRequired"
+        }
+      },
+      "PositionCreated": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "62abe4354f232"
+              },
+              "role": {
+                "type": "string",
+                "example": "Head Teacher"
+              },
+              "class": {
+                "type": "string",
+                "example": "HDT"
+              },
+              "course": {
+                "type": "string",
+                "example": "Engr 101"
+              },
+              "user": {
+                "type": "string",
+                "example": "62abe4354f232"
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "position created"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "PositionCreated"
+        }
+      },
+      "PositionDeleted": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "position deleted"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "PositionDeleted"
+        }
+      },
+      "PositionNotFound": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "position not found"
+          },
+          "status": {
+            "type": "number",
+            "example": 404
+          }
+        },
+        "xml": {
+          "name": "PositionNotFound"
+        }
+      },
+      "InvalidPositionId": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "invalid position id"
+          },
+          "status": {
+            "type": "number",
+            "example": 406
+          }
+        },
+        "xml": {
+          "name": "InvalidPositionId"
+        }
+      },
+      "Event": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Project Presentation"
+          },
+          "course": {
+            "type": "string",
+            "example": "PRO 101"
+          },
+          "date": {
+            "type": "object",
+            "properties": {}
+          },
+          "class": {
+            "type": "string",
+            "example": "Room 101"
+          },
+          "startTime": {
+            "type": "number",
+            "example": 1000
+          },
+          "endTime": {
+            "type": "number",
+            "example": 1200
+          },
+          "status": {
+            "type": "string",
+            "example": "normal"
+          }
+        },
+        "xml": {
+          "name": "Event"
+        }
+      },
+      "EventRequired": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "example": "title is required"
+              },
+              "course": {
+                "type": "string",
+                "example": "course is required"
+              },
+              "date": {
+                "type": "string",
+                "example": "date is required"
+              },
+              "class": {
+                "type": "string",
+                "example": "class is required"
+              },
+              "startTime": {
+                "type": "string",
+                "example": "startTime is required"
+              },
+              "endTime": {
+                "type": "string",
+                "example": "endTime is required"
+              },
+              "status": {
+                "type": "string",
+                "example": "status is required"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "title is required, course is required, date is required, class is required, startTime is required, endTime is required, status is required"
+          },
+          "status": {
+            "type": "number",
+            "example": 400
+          }
+        },
+        "xml": {
+          "name": "EventRequired"
+        }
+      },
+      "EventCreated": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "62abe4354f232"
+              },
+              "title": {
+                "type": "string",
+                "example": "Project Presentation"
+              },
+              "course": {
+                "type": "string",
+                "example": "PRO 101"
+              },
+              "date": {
+                "type": "object",
+                "properties": {}
+              },
+              "class": {
+                "type": "string",
+                "example": "Room 101"
+              },
+              "startTime": {
+                "type": "number",
+                "example": 1000
+              },
+              "endTime": {
+                "type": "number",
+                "example": 1200
+              },
+              "status": {
+                "type": "string",
+                "example": "normal"
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "event created"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "EventCreated"
+        }
+      },
+      "EventUpdated": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "62abe4354f232"
+              },
+              "title": {
+                "type": "string",
+                "example": "Project Presentation"
+              },
+              "course": {
+                "type": "string",
+                "example": "PRO 101"
+              },
+              "date": {
+                "type": "object",
+                "properties": {}
+              },
+              "class": {
+                "type": "string",
+                "example": "Room 101"
+              },
+              "startTime": {
+                "type": "number",
+                "example": 1000
+              },
+              "endTime": {
+                "type": "number",
+                "example": 1200
+              },
+              "status": {
+                "type": "string",
+                "example": "normal"
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "event updated"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "EventUpdated"
+        }
+      },
+      "EventsFetched": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "62abe4354f232"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "Project Presentation"
+                },
+                "course": {
+                  "type": "string",
+                  "example": "PRO 101"
+                },
+                "date": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "class": {
+                  "type": "string",
+                  "example": "Room 101"
+                },
+                "startTime": {
+                  "type": "number",
+                  "example": 1000
+                },
+                "endTime": {
+                  "type": "number",
+                  "example": 1200
+                },
+                "status": {
+                  "type": "string",
+                  "example": "normal"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2024-09-01T01:41:42.667Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2024-09-01T01:41:42.667Z"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "events fetched"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "EventsFetched"
+        }
+      },
+      "EventFetched": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "62abe4354f232"
+              },
+              "title": {
+                "type": "string",
+                "example": "Project Presentation"
+              },
+              "course": {
+                "type": "string",
+                "example": "PRO 101"
+              },
+              "date": {
+                "type": "object",
+                "properties": {}
+              },
+              "class": {
+                "type": "string",
+                "example": "Room 101"
+              },
+              "startTime": {
+                "type": "number",
+                "example": 1000
+              },
+              "endTime": {
+                "type": "number",
+                "example": 1200
+              },
+              "status": {
+                "type": "string",
+                "example": "normal"
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "event fetched"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "EventFetched"
+        }
+      },
+      "EventDeleted": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "event deleted"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "EventDeleted"
+        }
+      },
+      "EventNotFound": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "event not found"
+          },
+          "status": {
+            "type": "number",
+            "example": 404
+          }
+        },
+        "xml": {
+          "name": "EventNotFound"
+        }
+      },
+      "InvalidEventId": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "invalid event id"
+          },
+          "status": {
+            "type": "number",
+            "example": 406
+          }
+        },
+        "xml": {
+          "name": "InvalidEventId"
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
