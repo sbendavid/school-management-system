@@ -1,10 +1,9 @@
 const eventService = require("../services/eventService");
 const UserService = require("../services/userService");
 const {
-  courseValidation,
-  updateCourseValidation,
-  updateCourseStatusValidation,
-} = require("../validators/courseValidator");
+  eventValidation,
+  updateEventValidation,
+} = require("../validators/eventValidator");
 
 const eventController = {
   async createEvent(req, res) {
@@ -18,12 +17,12 @@ const eventController = {
       status,
     } = req.body;
 
-    // const { error } = courseValidation(req.body);
-    // if (error) {
-    //   return res
-    //     .status(400)
-    //     .json({ status: 400, message: error.details[0].message });
-    // }
+    const { error } = eventValidation(req.body);
+    if (error) {
+      return res
+        .status(400)
+        .json({ status: 400, message: error.details[0].message });
+    }
 
     try {
       const newEvent = await eventService.createEvent({
@@ -85,12 +84,12 @@ const eventController = {
       endTime,
     } = req.body;
 
-    // const { error } = updateCourseValidation(req.body);
-    // if (error) {
-    //   return res
-    //     .status(400)
-    //     .json({ status: 400, message: error.details[0].message });
-    // }
+    const { error } = updateEventValidation(req.body);
+    if (error) {
+      return res
+        .status(400)
+        .json({ status: 400, message: error.details[0].message });
+    }
 
     try {
       const event = await eventService.getEventById(id);

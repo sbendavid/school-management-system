@@ -20,20 +20,6 @@ const updateCourseValidation = (data) => {
   const schema = Joi.object({
     class: Joi.string().optional(),
     code: Joi.string().optional(),
-    status: Joi.string()
-      .valid(...statusEnum)
-      .optional(),
-  });
-
-  return schema.validate(data);
-};
-
-// Validation for updating course status only
-const updateCourseStatusValidation = (data) => {
-  const schema = Joi.object({
-    status: Joi.string()
-      .valid(...statusEnum)
-      .required(),
   });
 
   return schema.validate(data);
@@ -42,5 +28,4 @@ const updateCourseStatusValidation = (data) => {
 module.exports = {
   courseValidation,
   updateCourseValidation,
-  updateCourseStatusValidation,
 };

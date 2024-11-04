@@ -3,7 +3,6 @@ const UserService = require("../services/userService");
 const {
   courseValidation,
   updateCourseValidation,
-  updateCourseStatusValidation,
 } = require("../validators/courseValidator");
 
 const courseController = {
@@ -101,13 +100,6 @@ const courseController = {
   async updateCourseStatus(req, res) {
     const { id } = req.params;
     const { status } = req.body;
-
-    const { error } = updateCourseStatusValidation(req.body);
-    if (error) {
-      return res
-        .status(400)
-        .json({ status: 400, message: error.details[0].message });
-    }
 
     try {
       const course = await courseService.getCourseById(id);
