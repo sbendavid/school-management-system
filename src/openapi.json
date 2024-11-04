@@ -689,9 +689,6 @@
               }
             }
           },
-          "400": {
-            "description": "Bad Request"
-          },
           "401": {
             "description": "Unauthorized"
           },
@@ -1322,6 +1319,430 @@
             "bearerAuth": true
           }
         ]
+      }
+    },
+    "/events/": {
+      "post": {
+        "tags": [
+          "event"
+        ],
+        "summary": "Create event",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventCreated"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventCreated"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventRequired"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventRequired"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Event"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Event"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "event"
+        ],
+        "summary": "Fetch events",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventFetched"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventFetched"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ]
+      }
+    },
+    "/events/{id}": {
+      "get": {
+        "tags": [
+          "event"
+        ],
+        "summary": "Fetch events",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventFetched"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventFetched"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventNotFound"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidEventId"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidEventId"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "event"
+        ],
+        "summary": "Update a event",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventUpdated"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventUpdated"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventNotFound"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidEventId"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidEventId"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Event"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Event"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "event"
+        ],
+        "summary": "Delete a event",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventDeleted"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventDeleted"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventNotFound"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidEventId"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidEventId"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ]
+      }
+    },
+    "/events/{id}/status": {
+      "patch": {
+        "tags": [
+          "event"
+        ],
+        "summary": "Update a event status",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventUpdated"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventUpdated"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventNotFound"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidEventId"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidEventId"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventStatus"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/EventStatus"
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -2256,6 +2677,386 @@
         },
         "xml": {
           "name": "InvalidPositionId"
+        }
+      },
+      "Event": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Project Presentation"
+          },
+          "course": {
+            "type": "string",
+            "example": "PRO 101"
+          },
+          "date": {
+            "type": "object",
+            "properties": {}
+          },
+          "class": {
+            "type": "string",
+            "example": "Room 101"
+          },
+          "startTime": {
+            "type": "number",
+            "example": 1000
+          },
+          "endTime": {
+            "type": "number",
+            "example": 1200
+          },
+          "status": {
+            "type": "string",
+            "example": "normal"
+          }
+        },
+        "xml": {
+          "name": "Event"
+        }
+      },
+      "EventRequired": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "example": "title is required"
+              },
+              "course": {
+                "type": "string",
+                "example": "course is required"
+              },
+              "date": {
+                "type": "string",
+                "example": "date is required"
+              },
+              "class": {
+                "type": "string",
+                "example": "class is required"
+              },
+              "startTime": {
+                "type": "string",
+                "example": "startTime is required"
+              },
+              "endTime": {
+                "type": "string",
+                "example": "endTime is required"
+              },
+              "status": {
+                "type": "string",
+                "example": "status is required"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "title is required, course is required, date is required, class is required, startTime is required, endTime is required, status is required"
+          },
+          "status": {
+            "type": "number",
+            "example": 400
+          }
+        },
+        "xml": {
+          "name": "EventRequired"
+        }
+      },
+      "EventCreated": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "62abe4354f232"
+              },
+              "title": {
+                "type": "string",
+                "example": "Project Presentation"
+              },
+              "course": {
+                "type": "string",
+                "example": "PRO 101"
+              },
+              "date": {
+                "type": "object",
+                "properties": {}
+              },
+              "class": {
+                "type": "string",
+                "example": "Room 101"
+              },
+              "startTime": {
+                "type": "number",
+                "example": 1000
+              },
+              "endTime": {
+                "type": "number",
+                "example": 1200
+              },
+              "status": {
+                "type": "string",
+                "example": "normal"
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "event created"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "EventCreated"
+        }
+      },
+      "EventUpdated": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "62abe4354f232"
+              },
+              "title": {
+                "type": "string",
+                "example": "Project Presentation"
+              },
+              "course": {
+                "type": "string",
+                "example": "PRO 101"
+              },
+              "date": {
+                "type": "object",
+                "properties": {}
+              },
+              "class": {
+                "type": "string",
+                "example": "Room 101"
+              },
+              "startTime": {
+                "type": "number",
+                "example": 1000
+              },
+              "endTime": {
+                "type": "number",
+                "example": 1200
+              },
+              "status": {
+                "type": "string",
+                "example": "normal"
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "event updated"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "EventUpdated"
+        }
+      },
+      "EventsFetched": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "62abe4354f232"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "Project Presentation"
+                },
+                "course": {
+                  "type": "string",
+                  "example": "PRO 101"
+                },
+                "date": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "class": {
+                  "type": "string",
+                  "example": "Room 101"
+                },
+                "startTime": {
+                  "type": "number",
+                  "example": 1000
+                },
+                "endTime": {
+                  "type": "number",
+                  "example": 1200
+                },
+                "status": {
+                  "type": "string",
+                  "example": "normal"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2024-09-01T01:41:42.667Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2024-09-01T01:41:42.667Z"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "events fetched"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "EventsFetched"
+        }
+      },
+      "EventFetched": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "62abe4354f232"
+              },
+              "title": {
+                "type": "string",
+                "example": "Project Presentation"
+              },
+              "course": {
+                "type": "string",
+                "example": "PRO 101"
+              },
+              "date": {
+                "type": "object",
+                "properties": {}
+              },
+              "class": {
+                "type": "string",
+                "example": "Room 101"
+              },
+              "startTime": {
+                "type": "number",
+                "example": 1000
+              },
+              "endTime": {
+                "type": "number",
+                "example": 1200
+              },
+              "status": {
+                "type": "string",
+                "example": "normal"
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2024-09-01T01:41:42.667Z"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "event fetched"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "EventFetched"
+        }
+      },
+      "EventDeleted": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "event deleted"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          }
+        },
+        "xml": {
+          "name": "EventDeleted"
+        }
+      },
+      "EventNotFound": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "event not found"
+          },
+          "status": {
+            "type": "number",
+            "example": 404
+          }
+        },
+        "xml": {
+          "name": "EventNotFound"
+        }
+      },
+      "InvalidEventId": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "invalid event id"
+          },
+          "status": {
+            "type": "number",
+            "example": 406
+          }
+        },
+        "xml": {
+          "name": "InvalidEventId"
         }
       }
     },

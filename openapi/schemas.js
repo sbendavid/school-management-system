@@ -58,6 +58,20 @@ const Position_d = makeDB({
   user: Auth_d.id,
 });
 
+const Event = {
+  title: "Project Presentation",
+  course: "PRO 101",
+  date: new Date(),
+  class: "Room 101",
+  startTime: 1000,
+  endTime: 1200,
+  status: "normal",
+};
+
+const Event_d = makeDB({
+  ...Event,
+});
+
 const schemas = {
   Login: Login,
   LoginSuccess: responseSchema({
@@ -122,6 +136,16 @@ const schemas = {
   PositionDeleted: ModelDeleted("position"),
   PositionNotFound: ModelNotFound("position"),
   InvalidPositionId: InvalidId("position"),
+
+  Event,
+  EventRequired: ValueRequired(Event),
+  EventCreated: ModelCreated("event", Event_d),
+  EventUpdated: ModelUpdated("event", Event_d),
+  EventsFetched: ModelsFetched("events", Event_d),
+  EventFetched: ModelFetched("event", Event_d),
+  EventDeleted: ModelDeleted("event"),
+  EventNotFound: ModelNotFound("event"),
+  InvalidEventId: InvalidId("event"),
 };
 
 module.exports = schemas;
