@@ -12,6 +12,7 @@ const {
   updateUserStatus,
   deleteUser,
   assignPosition,
+  getPositionById,
 } = userController;
 
 userRoute.post(
@@ -133,4 +134,21 @@ userRoute.post(
   assignPosition
 );
 
+userRoute.get(
+  "/:id/position",
+  /**
+      #swagger.summary = "Fetch position"
+      #swagger.security = []
+      #swagger.responses[200] = {
+          schema:  { $ref: "#/components/schemas/PositionFetched" }
+      }
+      #swagger.responses[404] = {
+          schema:  { $ref: "#/components/schemas/PositionNotFound" }
+      }
+      #swagger.responses[406] = {
+          schema:  { $ref: "#/components/schemas/InvalidPositionId" }
+      }
+    */
+  getPositionById
+);
 module.exports = userRoute;

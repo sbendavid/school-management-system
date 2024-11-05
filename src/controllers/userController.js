@@ -193,6 +193,24 @@ const userController = {
       return res.status(500).json({ status: 500, message: error.message });
     }
   },
+
+  async getPositionById(req, res) {
+    const { id } = req.params;
+
+    try {
+      const position = await PositionService.getPositionById(id);
+      if (!position) {
+        return res
+          .status(404)
+          .json({ status: 404, message: "Position not found" });
+      }
+      return res
+        .status(200)
+        .json({ status: 200, message: "Position fetched", data: position });
+    } catch (error) {
+      return res.status(500).json({ status: 500, message: error.message });
+    }
+  },
 };
 
 module.exports = userController;
