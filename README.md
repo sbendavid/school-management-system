@@ -39,10 +39,11 @@ cd school-management-system
 ```bash 
 npm install 
 ```
-6. Run the app:
+4. Run the app:
 ```bash 
 npm run dev
 ```
+5. Open your web browser and navigate to `http://localhost:3000` or `https://school-management-system-xv7e.onrender.com` to access the API documentation.
 
 ## License
 This project is licensed under the MIT License.
