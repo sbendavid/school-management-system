@@ -26,7 +26,7 @@ const documentation = {
       description: "Local Server",
     },
     {
-      url: "https://not-hosted-yet.onrender.com/api/",
+      url: "https://school-management-system-xv7e.onrender.com",
       description: "Remote Host",
     },
   ],
